@@ -4,15 +4,27 @@ import { FullManagement } from "@/components/sections/FullManagement";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { breadcrumbJsonLd, localBusinessJsonLd } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { PRIMARY_CTA, siteConfig } from "@/lib/site";
 import type { CityContent } from "@/data/cities";
 import { CITIES } from "@/data/cities";
 
-export function CityPageTemplate({ city }: { city: CityContent }) {
+export function CityPageTemplate({
+  city,
+  hubCommunes,
+}: {
+  city: CityContent;
+  /** Réservé à /conciergerie-cote-de-nacre : transforme la page en hub régional listant ses communes. */
+  hubCommunes?: string[];
+}) {
   const relatedCities = city.related
+    .map((slug) => CITIES.find((c) => c.slug === slug))
+    .filter((c): c is CityContent => Boolean(c));
+
+  const hubCities = (hubCommunes ?? [])
     .map((slug) => CITIES.find((c) => c.slug === slug))
     .filter((c): c is CityContent => Boolean(c));
 
@@ -50,6 +62,38 @@ export function CityPageTemplate({ city }: { city: CityContent }) {
           </Reveal>
         </Container>
       </section>
+
+      {hubCities.length > 0 && (
+        <section className="bg-blanc-casse py-20 lg:py-24">
+          <Container>
+            <SectionHeading
+              eyebrow="Communes du littoral"
+              title="Les villages de la Côte de Nacre"
+              description="Chaque commune a son identité propre. Belle Saisons adapte la gestion de votre bien à ce profil local plutôt que d'appliquer une méthode unique."
+            />
+            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {hubCities.map((commune, index) => (
+                <Reveal key={commune.slug} delay={index * 70}>
+                  <Link
+                    href={`/${commune.slug}`}
+                    className="group flex h-full flex-col gap-3 rounded-sm border border-anthracite/10 bg-ivoire p-6 transition-colors hover:border-champagne"
+                  >
+                    <h3 className="font-serif text-lg text-anthracite">
+                      {commune.name}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-brun">
+                      {commune.identity}
+                    </p>
+                    <span className="mt-auto text-xs uppercase tracking-[0.18em] text-champagne-ink transition-transform group-hover:translate-x-1">
+                      Découvrir →
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       <section className="bg-sable/30 py-20 lg:py-24">
         <Container>
@@ -91,22 +135,28 @@ export function CityPageTemplate({ city }: { city: CityContent }) {
                 <Link
                   key={related.slug}
                   href={`/${related.slug}`}
-                  className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne"
+                  className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne-ink"
                 >
                   {related.name}
                 </Link>
               ))}
               <Link
                 href="/services"
-                className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne"
+                className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne-ink"
               >
                 Nos services
               </Link>
               <Link
                 href="/proprietaires"
-                className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne"
+                className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne-ink"
               >
                 Espace propriétaires
+              </Link>
+              <Link
+                href={PRIMARY_CTA.href}
+                className="rounded-full border border-champagne bg-champagne/10 px-5 py-2 text-sm text-champagne-ink transition-colors hover:bg-champagne/20"
+              >
+                {PRIMARY_CTA.label}
               </Link>
             </div>
           </Container>

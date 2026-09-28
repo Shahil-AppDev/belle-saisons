@@ -6,6 +6,15 @@ import { buildMetadata } from "@/lib/seo";
 
 const SLUG = "conciergerie-cote-de-nacre";
 
+const HUB_COMMUNES = [
+  "conciergerie-ouistreham",
+  "conciergerie-hermanville-sur-mer",
+  "conciergerie-lion-sur-mer",
+  "conciergerie-luc-sur-mer",
+  "conciergerie-saint-aubin-sur-mer",
+  "conciergerie-courseulles-sur-mer",
+];
+
 export function generateMetadata(): Metadata {
   const city = getCityBySlug(SLUG);
   if (!city) return {};
@@ -19,5 +28,5 @@ export function generateMetadata(): Metadata {
 export default function Page() {
   const city = getCityBySlug(SLUG);
   if (!city) notFound();
-  return <CityPageTemplate city={city} />;
+  return <CityPageTemplate city={city} hubCommunes={HUB_COMMUNES} />;
 }
