@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { submitEstimation } from "@/lib/actions/estimation";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
-import { PROPERTY_TYPES, NEEDS_OPTIONS } from "@/lib/validation/estimation";
+import { PROPERTY_TYPES, NEEDS_OPTIONS } from "@/lib/validation/estimation-options";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { FormConfirmation } from "@/components/sections/FormConfirmation";
 import { trackEvent } from "@/lib/analytics";
@@ -32,9 +32,7 @@ export function EstimationForm() {
     previousStatus.current = state.status;
 
     if (state.status === "success") {
-      trackEvent("estimation_form_submit_success");
-    } else if (state.status === "error") {
-      trackEvent("estimation_form_submit_error", { message: state.message });
+      trackEvent("owner_form_submit");
     }
   }, [state.status, state.message]);
 
@@ -61,7 +59,7 @@ export function EstimationForm() {
   function markStarted() {
     if (!hasTrackedStart.current) {
       hasTrackedStart.current = true;
-      trackEvent("estimation_form_start");
+      trackEvent("owner_form_start");
     }
   }
 
@@ -80,7 +78,8 @@ export function EstimationForm() {
       setNeedsError(undefined);
     }
 
-    trackEvent("estimation_form_step_complete", { step });
+    if (step === 1) trackEvent("owner_form_step_2");
+    if (step === 2) trackEvent("owner_form_step_3");
     setStep((current) => Math.min(current + 1, STEPS.length));
   }
 
@@ -104,6 +103,10 @@ export function EstimationForm() {
       noValidate
       className="flex flex-col gap-8 rounded-sm border border-anthracite/10 bg-blanc-casse p-8 lg:p-10"
     >
+      <p className="sr-only" role="status" aria-live="polite">
+        Étape {step} sur {STEPS.length} : {STEPS[step - 1].label}
+      </p>
+
       <ol className="flex items-center gap-2" aria-label="Étapes du formulaire">
         {STEPS.map((s, index) => {
           const stepNumber = index + 1;
@@ -155,6 +158,7 @@ export function EstimationForm() {
             name="city"
             placeholder="Caen, Ouistreham…"
             required
+            maxLength={80}
             error={state.fieldErrors?.city}
           />
           <TextField
@@ -163,6 +167,7 @@ export function EstimationForm() {
             placeholder="14000"
             inputMode="numeric"
             required
+            maxLength={5}
             error={state.fieldErrors?.postalCode}
           />
         </div>
@@ -232,10 +237,10 @@ export function EstimationForm() {
       >
         <legend className="sr-only">Vos coordonnées</legend>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <TextField label="Prénom" name="firstName" required error={state.fieldErrors?.firstName} />
-          <TextField label="Nom" name="lastName" required error={state.fieldErrors?.lastName} />
-          <TextField label="Email" name="email" type="email" required error={state.fieldErrors?.email} />
-          <TextField label="Téléphone" name="phone" type="tel" required error={state.fieldErrors?.phone} />
+          <TextField label="Prénom" name="firstName" required maxLength={80} error={state.fieldErrors?.firstName} />
+          <TextField label="Nom" name="lastName" required maxLength={80} error={state.fieldErrors?.lastName} />
+          <TextField label="Email" name="email" type="email" required maxLength={200} error={state.fieldErrors?.email} />
+          <TextField label="Téléphone" name="phone" type="tel" required maxLength={20} error={state.fieldErrors?.phone} />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="message" className="text-xs uppercase tracking-[0.18em] text-brun">
@@ -245,6 +250,7 @@ export function EstimationForm() {
             id="message"
             name="message"
             rows={4}
+            maxLength={2000}
             placeholder="Une précision à nous transmettre ?"
             className="border border-anthracite/20 bg-blanc-casse px-4 py-3 text-sm text-anthracite focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/40"
           />
@@ -258,9 +264,15 @@ export function EstimationForm() {
             aria-describedby={state.fieldErrors?.consent ? "consent-error" : undefined}
           />
           <span>
-            J&apos;accepte que ces informations soient utilisées par Belle
-            Saisons pour étudier ma demande. Aucune donnée n&apos;est cédée
-            à un tiers.
+            J&apos;accepte que les informations transmises soient utilisées
+            pour répondre à ma demande, conformément à notre{" "}
+            <a
+              href="/politique-de-confidentialite"
+              className="text-champagne-ink underline underline-offset-2"
+            >
+              politique de confidentialité
+            </a>
+            .
           </span>
         </label>
         {state.fieldErrors?.consent && (
@@ -319,6 +331,7 @@ function TextField({
   placeholder,
   min,
   max,
+  maxLength,
   inputMode,
   error,
 }: {
@@ -329,6 +342,7 @@ function TextField({
   placeholder?: string;
   min?: number;
   max?: number;
+  maxLength?: number;
   inputMode?: "numeric";
   error?: string;
 }) {
@@ -346,6 +360,7 @@ function TextField({
         placeholder={placeholder}
         min={min}
         max={max}
+        maxLength={maxLength}
         inputMode={inputMode}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${name}-error` : undefined}
@@ -371,9 +386,12 @@ function RadioCards({
   options: { value: string; label: string }[];
   error?: string;
 }) {
+  const labelId = `${name}-label`;
+  const errorId = `${name}-error`;
+
   return (
-    <div className="flex flex-col gap-3">
-      <span className="text-xs uppercase tracking-[0.18em] text-brun">{label} *</span>
+    <div className="flex flex-col gap-3" role="radiogroup" aria-labelledby={labelId} aria-describedby={error ? errorId : undefined}>
+      <span id={labelId} className="text-xs uppercase tracking-[0.18em] text-brun">{label} *</span>
       <div className="flex flex-wrap gap-3">
         {options.map((option) => (
           <label
@@ -391,7 +409,7 @@ function RadioCards({
           </label>
         ))}
       </div>
-      {error && <p className="text-xs text-red-700">{error}</p>}
+      {error && <p id={errorId} className="text-xs text-red-700">{error}</p>}
     </div>
   );
 }
@@ -409,9 +427,12 @@ function CheckboxCards({
   error?: string;
   onChange?: () => void;
 }) {
+  const labelId = `${name}-label`;
+  const errorId = `${name}-error`;
+
   return (
-    <div className="flex flex-col gap-3">
-      <span className="text-xs uppercase tracking-[0.18em] text-brun">{label} *</span>
+    <div className="flex flex-col gap-3" role="group" aria-labelledby={labelId} aria-describedby={error ? errorId : undefined}>
+      <span id={labelId} className="text-xs uppercase tracking-[0.18em] text-brun">{label} *</span>
       <div className="flex flex-wrap gap-3">
         {options.map((option) => (
           <label
@@ -422,6 +443,7 @@ function CheckboxCards({
               type="checkbox"
               name={name}
               value={option.value}
+              aria-invalid={Boolean(error)}
               className="sr-only"
               onChange={onChange}
             />
@@ -429,7 +451,7 @@ function CheckboxCards({
           </label>
         ))}
       </div>
-      {error && <p className="text-xs text-red-700">{error}</p>}
+      {error && <p id={errorId} className="text-xs text-red-700">{error}</p>}
     </div>
   );
 }
