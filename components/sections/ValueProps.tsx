@@ -32,7 +32,7 @@ export function ValueProps() {
           {VALUE_PROPS.map((item, index) => (
             <Reveal key={item.title} delay={index * 80}>
               <div className="flex flex-col gap-3 border-t border-anthracite/15 pt-6">
-                <span className="font-serif text-2xl text-champagne">
+                <span className="font-serif text-2xl text-champagne-ink">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="font-serif text-xl text-anthracite">

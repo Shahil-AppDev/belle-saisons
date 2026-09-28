@@ -27,7 +27,7 @@ export function FaqSection({
               <details className="group py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-serif text-lg text-anthracite">
                   {item.question}
-                  <span className="shrink-0 text-champagne transition-transform group-open:rotate-45">
+                  <span className="shrink-0 text-champagne-ink transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>

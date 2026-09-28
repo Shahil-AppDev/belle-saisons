@@ -7,6 +7,11 @@
   --bs-sable: #ecdfc7;
   --bs-or-doux: #cfa96a;
   --bs-champagne: #b98f4e;
+  /* Variante foncée du champagne, réservée au texte sur fond clair :
+     #b98f4e n'offre que ~2.8:1 de contraste sur ivoire/blanc-cassé
+     (insuffisant, WCAG AA exige 4.5:1). Cette teinte conserve
+     l'identité dorée tout en restant lisible. */
+  --bs-champagne-ink: #7d5e28;
   --bs-brun: #6b5a44;
   --bs-anthracite: #1f1b16;
   --bs-noir: #14110d;
@@ -24,6 +29,7 @@
   --color-sable: var(--bs-sable);
   --color-or-doux: var(--bs-or-doux);
   --color-champagne: var(--bs-champagne);
+  --color-champagne-ink: var(--bs-champagne-ink);
   --color-brun: var(--bs-brun);
   --color-anthracite: var(--bs-anthracite);
   --color-noir: var(--bs-noir);

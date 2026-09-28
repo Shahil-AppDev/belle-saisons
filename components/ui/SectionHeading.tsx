@@ -25,7 +25,7 @@ export function SectionHeading({
       {eyebrow && (
         <span
           className={`text-xs uppercase tracking-[0.3em] ${
-            tone === "light" ? "text-or-doux" : "text-champagne"
+            tone === "light" ? "text-or-doux" : "text-champagne-ink"
           }`}
         >
           {eyebrow}
