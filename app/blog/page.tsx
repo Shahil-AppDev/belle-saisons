@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { BLOG_POSTS } from "@/data/blog";
+import { BLOG_POSTS, getCategoryLabel } from "@/data/blog";
 import { buildMetadata } from "@/lib/seo";
 
 const TITLE = "Blog — Conseils propriétaires à Caen et sur la Côte de Nacre";
@@ -39,7 +39,7 @@ export default function BlogPage() {
                   className="group flex h-full flex-col gap-4 rounded-sm border border-anthracite/10 bg-blanc-casse p-8 transition-colors hover:border-champagne"
                 >
                   <span className="text-xs uppercase tracking-[0.24em] text-champagne-ink">
-                    {post.category}
+                    {getCategoryLabel(post.category)}
                   </span>
                   <h2 className="font-serif text-2xl text-anthracite">
                     {post.title}

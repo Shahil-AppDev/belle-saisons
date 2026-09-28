@@ -5,7 +5,7 @@ import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { JsonLd } from "@/components/ui/JsonLd";
 import Link from "next/link";
-import { BLOG_POSTS, getPostBySlug } from "@/data/blog";
+import { BLOG_POSTS, getPostBySlug, getCategoryLabel } from "@/data/blog";
 import { blogPostingJsonLd, breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -39,7 +39,7 @@ export default async function BlogPostPage({
   return (
     <>
       <PageHero
-        eyebrow={post.category}
+        eyebrow={getCategoryLabel(post.category)}
         title={post.title}
         description={post.excerpt}
         breadcrumbs={[

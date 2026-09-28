@@ -4,7 +4,9 @@ import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { FaqSection } from "@/components/sections/FaqSection";
 import { SERVICES } from "@/data/services";
+import { SERVICES_FAQ } from "@/data/faq";
 import { buildMetadata, serviceJsonLd } from "@/lib/seo";
 
 const TITLE = "Nos services de conciergerie à Caen et sur la Côte de Nacre";
@@ -76,6 +78,12 @@ export default function ServicesPage() {
           </div>
         </Container>
       </section>
+
+      <FaqSection
+        items={SERVICES_FAQ}
+        eyebrow="FAQ services"
+        title="Questions fréquentes sur nos services"
+      />
 
       <CtaFinal
         title="Une question sur nos services ?"

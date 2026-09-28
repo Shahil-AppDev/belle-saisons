@@ -6,7 +6,7 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { HOME_FAQ } from "@/data/faq";
+import { OWNERS_FAQ } from "@/data/faq";
 import { buildMetadata } from "@/lib/seo";
 
 const TITLE = "Propriétaires : confiez la gestion de votre bien à Belle Saisons";
@@ -76,7 +76,11 @@ export default function ProprietairesPage() {
 
       <OwnersSection />
       <HowItWorks />
-      <FaqSection items={HOME_FAQ} withJsonLd={false} />
+      <FaqSection
+        items={OWNERS_FAQ}
+        eyebrow="FAQ propriétaires"
+        title="Vos questions sur l'accompagnement"
+      />
       <CtaFinal primaryLabel="Demander une estimation" />
     </>
   );
