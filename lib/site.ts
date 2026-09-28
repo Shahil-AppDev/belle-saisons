@@ -1,10 +1,21 @@
+// Domaine définitif du site. Piloté par NEXT_PUBLIC_SITE_URL pour permettre
+// des environnements de preview/staging sans jamais générer d'URL
+// localhost en production ; retombe sur le domaine définitif si la
+// variable n'est pas définie. Toujours sans slash final.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.belle-saisons.fr").replace(
+  /\/+$/,
+  ""
+);
+
 export const siteConfig = {
   name: "Conciergerie Belle Saisons",
   shortName: "Belle Saisons",
   baseline: "Votre temps, notre expertise",
   description:
     "Conciergerie haut de gamme à Caen et sur la Côte de Nacre. Belle Saisons gère l'intégralité de votre bien en location courte et moyenne durée : annonces, tarification, accueil voyageurs, ménage et maintenance.",
-  url: "https://www.belle-saisons.fr",
+  url: SITE_URL,
+  logoPath: "/brand/logo.png",
+  socialImagePath: "/brand/og-image.png",
   locale: "fr_FR",
   // Aucun email ni téléphone public : l'adresse contact@belle-saisons.fr
   // circule en interne mais n'a pas été confirmée comme boîte active, et
