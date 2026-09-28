@@ -66,7 +66,7 @@ export function Header() {
             size="sm"
             variant={transparent ? "ghost" : "primary"}
             className={transparent ? "text-blanc-casse border-blanc-casse/50 hover:border-blanc-casse" : ""}
-            onClick={() => trackEvent("cta_confier_mon_bien_click", { location: "header-desktop" })}
+            onClick={() => trackEvent("cta_confier_mon_bien", { location: "header-desktop" })}
           >
             {PRIMARY_CTA.label}
           </Button>
@@ -123,7 +123,7 @@ export function Header() {
             <Button
               href={PRIMARY_CTA.href}
               className="w-full"
-              onClick={() => trackEvent("cta_confier_mon_bien_click", { location: "header-mobile" })}
+              onClick={() => trackEvent("cta_confier_mon_bien", { location: "header-mobile" })}
             >
               {PRIMARY_CTA.label}
             </Button>

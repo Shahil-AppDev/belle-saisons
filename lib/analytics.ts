@@ -1,25 +1,34 @@
 /**
- * Abstraction analytics minimale, sans aucun outil chargé par défaut.
+ * Abstraction analytics respectueuse de la vie privée.
  *
- * Aujourd'hui, trackEvent() se contente de journaliser en local (utile en
- * développement) et d'exposer un point d'extension unique. Le jour où un
- * outil est choisi (Plausible, GA4, PostHog...), un seul fichier change :
- * celui-ci — aucun composant appelant trackEvent() n'a besoin d'être
- * modifié. Ne rien charger tant qu'aucune décision explicite n'a été
- * prise (RGPD : éviter tout traceur non nécessaire par défaut).
+ * trackEvent() relaie vers Plausible (window.plausible, injecté par
+ * components/analytics/PlausibleScript.tsx uniquement si
+ * NEXT_PUBLIC_ANALYTICS_DOMAIN est défini) et journalise en local en
+ * développement. Sans cette variable, aucun outil n'est chargé et cet
+ * appel ne fait rien de plus que le log de dev : le traçage est
+ * désactivé par défaut.
+ *
+ * Règle stricte : ne jamais passer de donnée personnelle en propriété
+ * (nom, email, téléphone, adresse, message libre). Les propriétés
+ * n'accueillent que des métadonnées non identifiantes (ex. un numéro
+ * d'étape, un nom de page).
  */
 export type AnalyticsEvent =
-  | "cta_confier_mon_bien_click"
-  | "estimation_form_start"
-  | "estimation_form_step_complete"
-  | "estimation_form_submit_success"
-  | "estimation_form_submit_error"
-  | "contact_form_submit_success"
-  | "contact_form_submit_error"
-  | "phone_click"
-  | "email_click";
+  | "owner_form_start"
+  | "owner_form_step_2"
+  | "owner_form_step_3"
+  | "owner_form_submit"
+  | "contact_form_submit"
+  | "cta_confier_mon_bien"
+  | "cta_services";
 
 export type AnalyticsProperties = Record<string, string | number | boolean | undefined>;
+
+declare global {
+  interface Window {
+    plausible?: (event: string, options?: { props?: AnalyticsProperties }) => void;
+  }
+}
 
 export function trackEvent(event: AnalyticsEvent, properties?: AnalyticsProperties): void {
   if (typeof window === "undefined") return;
@@ -28,6 +37,5 @@ export function trackEvent(event: AnalyticsEvent, properties?: AnalyticsProperti
     console.debug("[analytics]", event, properties ?? {});
   }
 
-  // Point d'extension : window.plausible?.(event, { props: properties })
-  // ou l'appel équivalent GA4/PostHog, une fois l'outil choisi.
+  window.plausible?.(event, properties ? { props: properties } : undefined);
 }

@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { PRIMARY_CTA } from "@/lib/site";
+import { HeroCtas } from "@/components/sections/HeroCtas";
 
 export function Hero() {
   return (
@@ -46,22 +45,7 @@ export function Hero() {
             du logement à l&apos;accueil des voyageurs, sur le littoral de
             Caen et de la Côte de Nacre.
           </p>
-          <div className="flex flex-col gap-4 pt-2 sm:flex-row">
-            <Button
-              href={PRIMARY_CTA.href}
-              variant="primary"
-              className="bg-or-doux! border-or-doux! text-noir hover:bg-champagne! hover:border-champagne!"
-            >
-              {PRIMARY_CTA.label}
-            </Button>
-            <Button
-              href="/services"
-              variant="ghost"
-              className="text-blanc-casse border-blanc-casse/40 hover:border-blanc-casse"
-            >
-              Découvrir nos services
-            </Button>
-          </div>
+          <HeroCtas />
         </div>
       </Container>
 
