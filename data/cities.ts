@@ -18,7 +18,7 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-caen",
     name: "Caen",
-    title: "Conciergerie Airbnb à Caen — Gestion locative haut de gamme",
+    title: "Conciergerie Airbnb à Caen — Gestion complète haut de gamme",
     metaDescription:
       "Conciergerie premium à Caen pour la gestion complète de votre bien en location courte et moyenne durée : annonces, tarification, accueil voyageurs, ménage et maintenance.",
     h1: "Conciergerie à Caen : une gestion complète pour votre bien",
@@ -26,6 +26,7 @@ export const CITIES: CityContent[] = [
     intro: [
       "Préfecture du Calvados, ville universitaire, pôle d'affaires et porte d'entrée vers les plages du Débarquement, Caen attire une clientèle variée : voyageurs d'affaires en semaine, familles et touristes de mémoire le week-end, étudiants et jeunes actifs en recherche de logements meublés temporaires.",
       "Cette diversité de demande est une opportunité pour les propriétaires, mais elle demande une gestion réactive : ajuster la tarification selon les périodes universitaires, les événements locaux ou les saisons touristiques, tout en maintenant un niveau de service constant. Belle Saisons prend en charge cette gestion au quotidien, pour un bien loué dans de bonnes conditions, toute l'année.",
+      "Pour un propriétaire déjà présent sur Airbnb à Caen, nos services couvrent aussi bien la reprise d'une annonce existante que le lancement d'un nouveau bien : diagnostic du logement, mise en valeur, tarification et suivi sont pensés pour un marché urbain où la qualité de présentation fait la différence.",
     ],
     identity:
       "À Caen, la demande en location courte durée provient autant des voyageurs d'affaires liés au tissu économique local que des visiteurs venus découvrir le château de Caen, les abbayes ou la mémoire du Débarquement. Le port de Ouistreham, à quelques minutes, ajoute une clientèle de passage vers l'Angleterre.",
@@ -57,7 +58,7 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-cote-de-nacre",
     name: "Côte de Nacre",
-    title: "Conciergerie Airbnb Côte de Nacre — Gestion locative saisonnière",
+    title: "Conciergerie Airbnb Côte de Nacre — Gestion complète saisonnière",
     metaDescription:
       "Belle Saisons accompagne les propriétaires de résidences secondaires sur la Côte de Nacre : gestion complète, optimisation tarifaire saisonnière et accueil des voyageurs.",
     h1: "Conciergerie sur la Côte de Nacre : gérer une résidence secondaire en toute sérénité",
@@ -96,9 +97,9 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-ouistreham",
     name: "Ouistreham",
-    title: "Conciergerie Airbnb à Ouistreham — Gestion locative port & plage",
+    title: "Conciergerie Airbnb à Ouistreham — Gestion complète port & plage",
     metaDescription:
-      "Conciergerie dédiée aux propriétaires de Ouistreham Riva-Bella : gestion locative complète adaptée au flux ferry, à la plage et à la marina.",
+      "Conciergerie dédiée aux propriétaires de Ouistreham Riva-Bella : gestion complète adaptée au flux ferry, à la plage et à la marina.",
     h1: "Conciergerie à Ouistreham : entre port, plage et flux de voyageurs",
     heroKicker: "Conciergerie Ouistreham",
     intro: [
@@ -135,7 +136,7 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-lion-sur-mer",
     name: "Lion-sur-Mer",
-    title: "Conciergerie Airbnb à Lion-sur-Mer — Gestion locative résidentielle",
+    title: "Conciergerie Airbnb à Lion-sur-Mer — Gestion complète résidentielle",
     metaDescription:
       "Belle Saisons gère les locations courte durée à Lion-sur-Mer : village résidentiel calme de la Côte de Nacre, entre plage et golf.",
     h1: "Conciergerie à Lion-sur-Mer : valoriser un bien dans un cadre résidentiel calme",
@@ -174,7 +175,7 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-luc-sur-mer",
     name: "Luc-sur-Mer",
-    title: "Conciergerie Airbnb à Luc-sur-Mer — Gestion locative station balnéaire",
+    title: "Conciergerie Airbnb à Luc-sur-Mer — Gestion complète station balnéaire",
     metaDescription:
       "Conciergerie premium à Luc-sur-Mer pour les propriétaires souhaitant louer leur bien en courte durée dans cette station balnéaire animée de la Côte de Nacre.",
     h1: "Conciergerie à Luc-sur-Mer : gérer un bien dans une station balnéaire vivante",
@@ -213,9 +214,9 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-hermanville-sur-mer",
     name: "Hermanville-sur-Mer",
-    title: "Conciergerie Airbnb à Hermanville-sur-Mer — Gestion locative Sword Beach",
+    title: "Conciergerie Airbnb à Hermanville-sur-Mer — Gestion complète Sword Beach",
     metaDescription:
-      "Belle Saisons accompagne les propriétaires d'Hermanville-sur-Mer, village du Débarquement de Sword Beach, dans la gestion locative de leur résidence secondaire.",
+      "Belle Saisons accompagne les propriétaires d'Hermanville-sur-Mer, village du Débarquement de Sword Beach, dans la gestion complète de leur résidence secondaire.",
     h1: "Conciergerie à Hermanville-sur-Mer : un village entre plage et mémoire",
     heroKicker: "Conciergerie Hermanville-sur-Mer",
     intro: [
@@ -252,10 +253,10 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-saint-aubin-sur-mer",
     name: "Saint-Aubin-sur-Mer",
-    title: "Conciergerie Airbnb à Saint-Aubin-sur-Mer — Gestion locative familiale",
+    title: "Conciergerie Airbnb à Saint-Aubin-sur-Mer — Gestion complète familiale",
     metaDescription:
       "Conciergerie à Saint-Aubin-sur-Mer pour les propriétaires de résidences secondaires familiales, entre plage de sable et Juno Beach.",
-    h1: "Conciergerie à Saint-Aubin-sur-Mer : la gestion locative d'un village familial",
+    h1: "Conciergerie à Saint-Aubin-sur-Mer : la gestion complète d'un village familial",
     heroKicker: "Conciergerie Saint-Aubin-sur-Mer",
     intro: [
       "Saint-Aubin-sur-Mer est une station balnéaire familiale de la Côte de Nacre, réputée pour sa large plage de sable et son ambiance conviviale. Le village est proche du secteur de Juno Beach, l'un des sites majeurs du Débarquement, et attire une clientèle fidèle chaque été.",
@@ -291,7 +292,7 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-courseulles-sur-mer",
     name: "Courseulles-sur-Mer",
-    title: "Conciergerie Airbnb à Courseulles-sur-Mer — Gestion locative port & Juno Beach",
+    title: "Conciergerie Airbnb à Courseulles-sur-Mer — Gestion complète port & Juno Beach",
     metaDescription:
       "Belle Saisons gère les biens en location courte durée à Courseulles-sur-Mer, port ostréicole et site de Juno Beach sur la Côte de Nacre.",
     h1: "Conciergerie à Courseulles-sur-Mer : entre port ostréicole et plages du Débarquement",
@@ -330,14 +331,14 @@ export const CITIES: CityContent[] = [
   {
     slug: "conciergerie-normandie",
     name: "Normandie",
-    title: "Conciergerie Airbnb en Normandie — Gestion locative Calvados et littoral",
+    title: "Conciergerie Airbnb en Normandie — Gestion complète Calvados et littoral",
     metaDescription:
       "Belle Saisons étend sa conciergerie premium à l'échelle de la Normandie, avec une expertise construite autour de Caen et de la Côte de Nacre.",
     h1: "Conciergerie en Normandie : une expertise ancrée à Caen et sur la Côte de Nacre",
     heroKicker: "Conciergerie Normandie",
     intro: [
       "La Normandie attire une clientèle touristique fidèle, entre plages du Débarquement, villes historiques, campagne du bocage et côtes escarpées. Le Calvados, en particulier, concentre une forte proportion de résidences secondaires destinées à la location saisonnière.",
-      "Belle Saisons a construit son expertise à Caen et sur la Côte de Nacre, avant d'accompagner progressivement des propriétaires sur d'autres secteurs de la région normande. Cette page présente notre approche de la gestion locative à l'échelle normande, avec la même exigence de service que sur notre zone d'origine.",
+      "Belle Saisons a construit son expertise à Caen et sur la Côte de Nacre, avant d'accompagner progressivement des propriétaires sur d'autres secteurs de la région normande. Cette page présente notre approche de la gestion complète à l'échelle normande, avec la même exigence de service que sur notre zone d'origine.",
     ],
     identity:
       "La Normandie combine tourisme de mémoire, patrimoine historique, côtes littorales et campagne, ce qui crée une demande locative diversifiée selon les secteurs, du littoral aux villes patrimoniales.",
@@ -354,7 +355,7 @@ export const CITIES: CityContent[] = [
           "Notre expertise est construite en priorité autour de Caen et de la Côte de Nacre. Nous étudions les demandes sur d'autres secteurs normands au cas par cas.",
       },
       {
-        question: "La gestion locative est-elle différente selon les secteurs de Normandie ?",
+        question: "La gestion complète est-elle différente selon les secteurs de Normandie ?",
         answer:
           "Oui, la stratégie tarifaire et la présentation du bien varient selon qu'il s'agit d'un secteur littoral, d'une ville patrimoniale ou d'un secteur rural.",
       },

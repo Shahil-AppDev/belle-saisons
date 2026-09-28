@@ -6,19 +6,19 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { buildMetadata } from "@/lib/seo";
 
-const TITLE = "Gestion locative complète à Caen et sur la Côte de Nacre";
+const TITLE = "Gestion complète de votre conciergerie à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
-  "Belle Saisons assure la gestion locative complète de votre bien en location courte et moyenne durée : stratégie, exploitation quotidienne et suivi, sans que vous ayez à intervenir.";
+  "Belle Saisons pilote l'exploitation opérationnelle de votre bien en location courte et moyenne durée : mise en valeur, coordination des séjours et suivi, sans que vous ayez à intervenir.";
 
 export const metadata: Metadata = buildMetadata({
   title: TITLE,
   description: DESCRIPTION,
-  path: "/gestion-locative",
+  path: "/gestion-complete",
 });
 
 const AXES = [
   {
-    title: "Stratégie de location",
+    title: "Stratégie de mise en location",
     description:
       "Analyse du bien, positionnement tarifaire et choix des plateformes les plus adaptées à sa localisation et à sa typologie.",
   },
@@ -39,16 +39,16 @@ const AXES = [
   },
 ];
 
-export default function GestionLocativePage() {
+export default function GestionCompletePage() {
   return (
     <>
       <PageHero
-        eyebrow="Gestion locative"
+        eyebrow="Gestion complète"
         title={TITLE}
         description={DESCRIPTION}
         breadcrumbs={[
           { name: "Accueil", path: "/" },
-          { name: "Gestion locative", path: "/gestion-locative" },
+          { name: "Gestion complète", path: "/gestion-complete" },
         ]}
       />
 
@@ -91,8 +91,9 @@ export default function GestionLocativePage() {
             <p className="text-brun leading-relaxed">
               Vous gardez la visibilité complète sur votre bien : périodes
               d&apos;occupation personnelle, orientations tarifaires et
-              décisions importantes restent entre vos mains. Belle Saisons en
-              assure l&apos;exécution.
+              décisions importantes restent entre vos mains. Belle Saisons
+              assure la coordination opérationnelle au quotidien, sans
+              jamais se substituer à vous dans vos décisions.
             </p>
           </div>
         </Container>

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "gestion location courte durée Caen",
     "conciergerie Côte de Nacre",
     "conciergerie Normandie",
-    "gestion locative Calvados",
+    "conciergerie Calvados",
   ],
   alternates: {
     canonical: "/",

@@ -9,7 +9,7 @@ import { buildMetadata, serviceJsonLd } from "@/lib/seo";
 
 const TITLE = "Nos services de conciergerie à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
-  "Découvrez l'ensemble des services de gestion locative proposés par Belle Saisons : annonces, tarification, calendrier, accueil voyageurs, ménage, maintenance et suivi propriétaire.";
+  "Découvrez l'ensemble des services de conciergerie proposés par Belle Saisons : annonces, tarification, calendrier, accueil voyageurs, ménage, maintenance et suivi propriétaire.";
 
 export const metadata: Metadata = buildMetadata({
   title: TITLE,
@@ -81,6 +81,7 @@ export default function ServicesPage() {
         title="Une question sur nos services ?"
         description="Parlons de votre bien et des services les plus adaptés à sa localisation et à votre situation."
         primaryLabel="Échanger avec notre équipe"
+        primaryHref="/contact"
       />
     </>
   );
