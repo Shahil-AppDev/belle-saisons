@@ -74,6 +74,7 @@ export default function AProposPage() {
         title="Faisons connaissance"
         description="Présentez-nous votre bien : nous serons heureux d'échanger sur vos objectifs."
         primaryLabel="Échanger avec notre équipe"
+        primaryHref="/contact"
       />
     </>
   );

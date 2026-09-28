@@ -1,97 +1,97 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { siteConfig } from "@/lib/site";
-
-const PROPERTY_TYPES = [
-  "Appartement",
-  "Maison",
-  "Résidence secondaire",
-  "Autre",
-];
+import { useActionState, useEffect, useRef } from "react";
+import { submitContact } from "@/lib/actions/contact";
+import { INITIAL_FORM_STATE } from "@/lib/actions/types";
+import { SubmitButton } from "@/components/ui/SubmitButton";
+import { FormConfirmation } from "@/components/sections/FormConfirmation";
+import { trackEvent } from "@/lib/analytics";
 
 export function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  const [state, formAction] = useActionState(submitContact, INITIAL_FORM_STATE);
+  const previousStatus = useRef(state.status);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const phone = formData.get("phone");
-    const propertyType = formData.get("propertyType");
-    const city = formData.get("city");
-    const message = formData.get("message");
+  useEffect(() => {
+    if (previousStatus.current === state.status) return;
+    previousStatus.current = state.status;
 
-    const subject = encodeURIComponent(
-      `Demande de gestion — ${propertyType ?? "Bien"} à ${city ?? ""}`
+    if (state.status === "success") {
+      trackEvent("contact_form_submit_success");
+    } else if (state.status === "error") {
+      trackEvent("contact_form_submit_error", { message: state.message });
+    }
+  }, [state.status, state.message]);
+
+  if (state.status === "success") {
+    return (
+      <FormConfirmation
+        title="Votre message a bien été transmis."
+        description="Notre équipe vous répond personnellement dans les meilleurs délais."
+      />
     );
-    const body = encodeURIComponent(
-      `Nom : ${name}\nEmail : ${email}\nTéléphone : ${phone}\nType de bien : ${propertyType}\nCommune : ${city}\n\nMessage :\n${message}`
-    );
-
-    window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
-    setStatus("sent");
   }
 
   return (
     <form
-      onSubmit={handleSubmit}
+      action={formAction}
+      noValidate
       className="flex flex-col gap-6 rounded-sm border border-anthracite/10 bg-blanc-casse p-8 lg:p-10"
     >
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <Field label="Nom complet" name="name" required />
-        <Field label="Email" name="email" type="email" required />
-        <Field label="Téléphone" name="phone" type="tel" />
-        <Field label="Commune du bien" name="city" placeholder="Caen, Ouistreham…" />
+        <Field label="Nom complet" name="name" required error={state.fieldErrors?.name} />
+        <Field label="Email" name="email" type="email" required error={state.fieldErrors?.email} />
+        <Field label="Téléphone" name="phone" type="tel" error={state.fieldErrors?.phone} />
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="text-xs uppercase tracking-[0.18em] text-brun">
-          Type de bien
-        </label>
-        <select
-          name="propertyType"
-          className="border border-anthracite/20 bg-blanc-casse px-4 py-3 text-sm text-anthracite focus:border-champagne focus:outline-none"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Sélectionnez une option
-          </option>
-          {PROPERTY_TYPES.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label className="text-xs uppercase tracking-[0.18em] text-brun">
-          Votre message
+        <label htmlFor="message" className="text-xs uppercase tracking-[0.18em] text-brun">
+          Votre message *
         </label>
         <textarea
+          id="message"
           name="message"
           rows={5}
+          required
           placeholder="Parlez-nous de votre bien et de vos objectifs…"
-          className="border border-anthracite/20 bg-blanc-casse px-4 py-3 text-sm text-anthracite focus:border-champagne focus:outline-none"
+          aria-describedby={state.fieldErrors?.message ? "message-error" : undefined}
+          className="border border-anthracite/20 bg-blanc-casse px-4 py-3 text-sm text-anthracite focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/40"
         />
+        {state.fieldErrors?.message && (
+          <p id="message-error" className="text-xs text-red-700">
+            {state.fieldErrors.message}
+          </p>
+        )}
       </div>
 
-      <button
-        type="submit"
-        className="inline-flex w-full items-center justify-center rounded-sm bg-anthracite px-7 py-3.5 text-sm uppercase tracking-[0.08em] text-blanc-casse transition-colors hover:bg-noir sm:w-fit"
-      >
-        Envoyer ma demande
-      </button>
+      <label className="flex items-start gap-3 text-sm text-brun">
+        <input
+          type="checkbox"
+          name="consent"
+          required
+          className="mt-1 h-4 w-4 shrink-0 accent-champagne"
+        />
+        <span>
+          J&apos;accepte que ces informations soient utilisées par Belle
+          Saisons pour répondre à ma demande.
+        </span>
+      </label>
+      {state.fieldErrors?.consent && (
+        <p className="text-xs text-red-700">{state.fieldErrors.consent}</p>
+      )}
 
-      {status === "sent" && (
-        <p className="text-sm text-champagne">
-          Votre messagerie va s&apos;ouvrir pour finaliser l&apos;envoi de
-          votre demande. À défaut, écrivez-nous directement à{" "}
-          {siteConfig.email}.
+      {/* Honeypot anti-spam : doit rester vide, invisible pour un humain */}
+      <div className="sr-only" aria-hidden="true">
+        <label htmlFor="company">Ne pas remplir ce champ</label>
+        <input type="text" id="company" name="company" tabIndex={-1} autoComplete="off" />
+      </div>
+
+      {state.status === "error" && state.message && (
+        <p role="alert" className="text-sm text-red-700">
+          {state.message}
         </p>
       )}
+
+      <SubmitButton className="w-full sm:w-fit">Envoyer mon message</SubmitButton>
     </form>
   );
 }
@@ -102,12 +102,14 @@ function Field({
   type = "text",
   required = false,
   placeholder,
+  error,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
   placeholder?: string;
+  error?: string;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -121,8 +123,15 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="border border-anthracite/20 bg-blanc-casse px-4 py-3 text-sm text-anthracite focus:border-champagne focus:outline-none"
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${name}-error` : undefined}
+        className="border border-anthracite/20 bg-blanc-casse px-4 py-3 text-sm text-anthracite focus:border-champagne focus:outline-none focus:ring-2 focus:ring-champagne/40"
       />
+      {error && (
+        <p id={`${name}-error`} className="text-xs text-red-700">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
