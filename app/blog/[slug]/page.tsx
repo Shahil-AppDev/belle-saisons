@@ -4,8 +4,9 @@ import { PageHero } from "@/components/sections/PageHero";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { JsonLd } from "@/components/ui/JsonLd";
+import Link from "next/link";
 import { BLOG_POSTS, getPostBySlug } from "@/data/blog";
-import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
+import { blogPostingJsonLd, breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
@@ -50,7 +51,9 @@ export default async function BlogPostPage({
 
       <article className="bg-ivoire py-16 lg:py-20">
         <Container className="max-w-3xl">
-          <div className="mb-10 flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-brun/70">
+          <div className="mb-10 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em] text-brun/70">
+            <span>{post.author}</span>
+            <span aria-hidden="true">·</span>
             <span>
               {new Date(post.date).toLocaleDateString("fr-FR", {
                 day: "numeric",
@@ -81,6 +84,25 @@ export default async function BlogPostPage({
               </div>
             ))}
           </div>
+
+          {post.relatedLinks.length > 0 && (
+            <div className="mt-14 flex flex-col gap-4 border-t border-anthracite/10 pt-8">
+              <span className="text-xs uppercase tracking-[0.2em] text-champagne-ink">
+                Pour aller plus loin
+              </span>
+              <div className="flex flex-wrap gap-3">
+                {post.relatedLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-full border border-anthracite/20 px-5 py-2 text-sm text-anthracite transition-colors hover:border-champagne hover:text-champagne-ink"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </Container>
       </article>
 
@@ -89,6 +111,15 @@ export default async function BlogPostPage({
         description="Belle Saisons vous accompagne dans la mise en location de votre bien, de A à Z."
       />
 
+      <JsonLd
+        data={blogPostingJsonLd({
+          title: post.title,
+          description: post.metaDescription,
+          path: `/blog/${post.slug}`,
+          datePublished: post.date,
+          authorName: post.author,
+        })}
+      />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Accueil", path: "/" },

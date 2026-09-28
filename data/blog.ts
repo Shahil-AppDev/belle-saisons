@@ -6,8 +6,12 @@ export type BlogPost = {
   date: string;
   readTime: string;
   category: string;
+  author: string;
   content: { heading?: string; paragraphs: string[] }[];
+  relatedLinks: { label: string; href: string }[];
 };
+
+export const DEFAULT_AUTHOR = "Conciergerie Belle Saisons";
 
 export const BLOG_POSTS: BlogPost[] = [
   {
@@ -20,6 +24,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-01-12",
     readTime: "5 min",
     category: "Guide propriétaire",
+    author: DEFAULT_AUTHOR,
     content: [
       {
         heading: "Un marché à double visage",
@@ -47,6 +52,11 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
     ],
+    relatedLinks: [
+      { label: "Conciergerie à Caen", href: "/conciergerie-caen" },
+      { label: "Nos services", href: "/services" },
+      { label: "Confier mon bien", href: "/confier-mon-bien" },
+    ],
   },
   {
     slug: "airbnb-caen-optimiser-revenus",
@@ -58,6 +68,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-01-26",
     readTime: "6 min",
     category: "Revenue management",
+    author: DEFAULT_AUTHOR,
     content: [
       {
         heading: "La tarification, un exercice permanent",
@@ -84,6 +95,11 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
     ],
+    relatedLinks: [
+      { label: "Conciergerie Airbnb", href: "/airbnb" },
+      { label: "Conciergerie à Caen", href: "/conciergerie-caen" },
+      { label: "Confier mon bien", href: "/confier-mon-bien" },
+    ],
   },
   {
     slug: "pourquoi-confier-logement-conciergerie-cote-de-nacre",
@@ -95,6 +111,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-02-09",
     readTime: "5 min",
     category: "Propriétaires",
+    author: DEFAULT_AUTHOR,
     content: [
       {
         heading: "Une saisonnalité qui demande de la réactivité",
@@ -116,6 +133,11 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
     ],
+    relatedLinks: [
+      { label: "Conciergerie Côte de Nacre", href: "/conciergerie-cote-de-nacre" },
+      { label: "Espace propriétaires", href: "/proprietaires" },
+      { label: "Confier mon bien", href: "/confier-mon-bien" },
+    ],
   },
   {
     slug: "location-saisonniere-ouistreham-guide",
@@ -127,6 +149,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-02-20",
     readTime: "5 min",
     category: "Guide propriétaire",
+    author: DEFAULT_AUTHOR,
     content: [
       {
         heading: "Une commune à deux vitesses",
@@ -146,6 +169,11 @@ export const BLOG_POSTS: BlogPost[] = [
           "La gestion des arrivées tardives ou très matinales, liées aux horaires de ferry, demande une organisation rigoureuse. C'est un des aspects que Belle Saisons intègre directement dans son accompagnement des propriétaires à Ouistreham, pour ne laisser aucun créneau d'arrivée sans solution.",
         ],
       },
+    ],
+    relatedLinks: [
+      { label: "Conciergerie à Ouistreham", href: "/conciergerie-ouistreham" },
+      { label: "Location courte durée", href: "/location-courte-duree" },
+      { label: "Confier mon bien", href: "/confier-mon-bien" },
     ],
   },
 ];

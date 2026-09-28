@@ -107,6 +107,51 @@ export function serviceJsonLd({
   };
 }
 
+export function blogPostingJsonLd({
+  title,
+  description,
+  path,
+  datePublished,
+  authorName,
+  image,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  authorName: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    url: `${siteConfig.url}${path}`,
+    datePublished,
+    dateModified: datePublished,
+    inLanguage: "fr-FR",
+    author: {
+      "@type": "Organization",
+      name: authorName,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/brand/logo.png`,
+      },
+    },
+    image: image ?? `${siteConfig.url}/brand/og-image-logo.png`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}${path}`,
+    },
+  };
+}
+
 export function faqJsonLd(items: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",

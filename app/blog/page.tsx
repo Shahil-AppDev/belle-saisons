@@ -38,7 +38,7 @@ export default function BlogPage() {
                   href={`/blog/${post.slug}`}
                   className="group flex h-full flex-col gap-4 rounded-sm border border-anthracite/10 bg-blanc-casse p-8 transition-colors hover:border-champagne"
                 >
-                  <span className="text-xs uppercase tracking-[0.24em] text-champagne">
+                  <span className="text-xs uppercase tracking-[0.24em] text-champagne-ink">
                     {post.category}
                   </span>
                   <h2 className="font-serif text-2xl text-anthracite">
@@ -49,7 +49,7 @@ export default function BlogPage() {
                   </p>
                   <div className="mt-auto flex items-center justify-between pt-4 text-xs text-brun/70">
                     <span>{post.readTime} de lecture</span>
-                    <span className="text-champagne transition-transform group-hover:translate-x-1">
+                    <span className="text-champagne-ink transition-transform group-hover:translate-x-1">
                       Lire l&apos;article →
                     </span>
                   </div>
