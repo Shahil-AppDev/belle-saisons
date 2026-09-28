@@ -1,9 +1,9 @@
 "use server";
 
 import { headers } from "next/headers";
-import { estimationSchema, NEEDS_OPTIONS } from "@/lib/validation/estimation";
+import { estimationSchema } from "@/lib/validation/estimation";
 import { checkRateLimit } from "@/lib/rate-limit";
-import { sendLeadEmail } from "@/lib/mail";
+import { sendOwnerConfirmationEmail, sendOwnerLeadEmail } from "@/lib/mail";
 import { zodIssuesToFieldErrors, getRequestIp } from "@/lib/actions/zod-errors";
 import type { FormState } from "@/lib/actions/types";
 
@@ -55,28 +55,26 @@ export async function submitEstimation(
   }
 
   const { data } = parsed;
-  const needsLabels = data.needs
-    .map((value) => NEEDS_OPTIONS.find((option) => option.value === value)?.label ?? value)
-    .join(", ");
 
-  await sendLeadEmail({
-    subject: `Nouvelle demande d'estimation — ${data.city} (${data.postalCode})`,
-    text: [
-      `Type de bien : ${data.propertyType}`,
-      `Commune : ${data.city} (${data.postalCode})`,
-      `Chambres : ${data.bedrooms} — Couchages : ${data.sleeps} — Surface : ${data.surface} m²`,
-      `Bien déjà exploité en location saisonnière : ${data.alreadyRented}`,
-      `Besoins exprimés : ${needsLabels}`,
-      "",
-      `Contact : ${data.firstName} ${data.lastName}`,
-      `Email : ${data.email}`,
-      `Téléphone : ${data.phone}`,
-      data.message ? `Message : ${data.message}` : undefined,
-    ]
-      .filter(Boolean)
-      .join("\n"),
-    replyTo: data.email,
-  });
+  const leadResult = await sendOwnerLeadEmail(data);
+
+  if (leadResult === "failed") {
+    // Resend est configuré mais l'envoi a réellement échoué : le lead
+    // risque de ne jamais atteindre l'équipe. On le signale proprement
+    // plutôt que d'afficher un faux succès — sans jamais exposer de
+    // détail technique au visiteur.
+    return {
+      status: "error",
+      message:
+        "Une erreur est survenue lors de la transmission de votre demande. Merci de réessayer dans quelques instants ou de nous écrire directement.",
+    };
+  }
+
+  // "not_configured" (dev/staging sans Resend) est un succès du point de
+  // vue de l'utilisateur : sa demande a été validée et journalisée.
+  if (leadResult === "sent") {
+    await sendOwnerConfirmationEmail(data);
+  }
 
   return { status: "success" };
 }

@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { contactSchema } from "@/lib/validation/contact";
 import { checkRateLimit } from "@/lib/rate-limit";
-import { sendLeadEmail } from "@/lib/mail";
+import { sendContactConfirmationEmail, sendContactLeadEmail } from "@/lib/mail";
 import { zodIssuesToFieldErrors, getRequestIp } from "@/lib/actions/zod-errors";
 import type { FormState } from "@/lib/actions/types";
 
@@ -15,6 +15,7 @@ export async function submitContact(
     name: formData.get("name"),
     email: formData.get("email"),
     phone: formData.get("phone") ?? "",
+    subject: formData.get("subject"),
     message: formData.get("message"),
     consent: formData.get("consent"),
     company: formData.get("company") ?? "",
@@ -45,19 +46,19 @@ export async function submitContact(
 
   const { data } = parsed;
 
-  await sendLeadEmail({
-    subject: `Nouveau message de contact — ${data.name}`,
-    text: [
-      `Nom : ${data.name}`,
-      `Email : ${data.email}`,
-      data.phone ? `Téléphone : ${data.phone}` : undefined,
-      "",
-      data.message,
-    ]
-      .filter(Boolean)
-      .join("\n"),
-    replyTo: data.email,
-  });
+  const leadResult = await sendContactLeadEmail(data);
+
+  if (leadResult === "failed") {
+    return {
+      status: "error",
+      message:
+        "Une erreur est survenue lors de la transmission de votre message. Merci de réessayer dans quelques instants ou de nous écrire directement.",
+    };
+  }
+
+  if (leadResult === "sent") {
+    await sendContactConfirmationEmail(data);
+  }
 
   return { status: "success" };
 }
