@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Container } from "@/components/ui/Container";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, PRIMARY_CTA } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 
 const TITLE = "Contact — Confiez votre bien à Belle Saisons";
@@ -41,17 +41,22 @@ export default function ContactPage() {
               gestion la plus adaptée.
             </p>
             <div className="flex flex-col gap-1 text-sm text-brun">
-              <span className="text-xs uppercase tracking-[0.2em] text-champagne">
-                Email
-              </span>
-              <span>{siteConfig.email}</span>
-            </div>
-            <div className="flex flex-col gap-1 text-sm text-brun">
-              <span className="text-xs uppercase tracking-[0.2em] text-champagne">
+              <span className="text-xs uppercase tracking-[0.2em] text-champagne-ink">
                 Zone d&apos;intervention
               </span>
               <span>{siteConfig.region}</span>
             </div>
+            <p className="text-sm text-brun">
+              Vous avez un bien à confier en gestion complète ? Utilisez
+              plutôt notre{" "}
+              <a
+                href={PRIMARY_CTA.href}
+                className="text-champagne-ink underline underline-offset-2"
+              >
+                formulaire dédié aux propriétaires
+              </a>
+              .
+            </p>
           </div>
 
           <ContactForm />

@@ -73,7 +73,14 @@ export default function PolitiqueConfidentialitePage() {
                 Conformément au Règlement Général sur la Protection des
                 Données (RGPD), vous disposez d&apos;un droit d&apos;accès,
                 de rectification et de suppression de vos données. Pour
-                exercer ce droit, contactez-nous à {siteConfig.email}.
+                exercer ce droit, utilisez notre{" "}
+                <a
+                  href="/contact"
+                  className="text-champagne-ink underline underline-offset-2"
+                >
+                  formulaire de contact
+                </a>
+                .
               </p>
             </section>
 
