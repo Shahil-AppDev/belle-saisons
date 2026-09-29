@@ -4,7 +4,8 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Gestion complète de votre conciergerie à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
@@ -101,6 +102,13 @@ export default function GestionCompletePage() {
 
       <HowItWorks />
       <CtaFinal />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Gestion complète", path: "/gestion-complete" },
+        ])}
+      />
     </>
   );
 }

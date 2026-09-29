@@ -3,7 +3,8 @@ import { PageHero } from "@/components/sections/PageHero";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "À propos de Belle Saisons";
 const DESCRIPTION =
@@ -75,6 +76,13 @@ export default function AProposPage() {
         description="Présentez-nous votre bien : nous serons heureux d'échanger sur vos objectifs."
         primaryLabel="Échanger avec notre équipe"
         primaryHref="/contact"
+      />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "À propos", path: "/a-propos" },
+        ])}
       />
     </>
   );

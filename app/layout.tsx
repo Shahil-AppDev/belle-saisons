@@ -86,6 +86,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Pas de `sameAs` : aucun profil social réel n'est encore communiqué
+// (voir siteConfig.social) — un tableau vide serait une propriété
+// artificielle plutôt qu'une simple absence de donnée.
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -94,7 +97,6 @@ const organizationJsonLd = {
   logo: `${siteConfig.url}${siteConfig.logoPath}`,
   description: siteConfig.description,
   areaServed: siteConfig.areaServed,
-  sameAs: [] as string[],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

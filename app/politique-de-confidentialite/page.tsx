@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { COMPANY } from "@/data/company";
 
@@ -199,6 +200,16 @@ export default function PolitiqueConfidentialitePage() {
           </div>
         </Container>
       </section>
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          {
+            name: "Politique de confidentialité",
+            path: "/politique-de-confidentialite",
+          },
+        ])}
+      />
     </>
   );
 }

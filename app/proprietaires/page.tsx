@@ -6,8 +6,9 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { OWNERS_FAQ } from "@/data/faq";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Propriétaires : confiez la gestion de votre bien à Belle Saisons";
 const DESCRIPTION =
@@ -82,6 +83,13 @@ export default function ProprietairesPage() {
         title="Vos questions sur l'accompagnement"
       />
       <CtaFinal primaryLabel="Demander une estimation" />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Propriétaires", path: "/proprietaires" },
+        ])}
+      />
     </>
   );
 }

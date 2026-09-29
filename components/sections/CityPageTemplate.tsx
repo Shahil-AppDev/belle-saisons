@@ -121,7 +121,6 @@ export function CityPageTemplate({
         items={city.faq}
         title={`Questions fréquentes — ${city.name}`}
         eyebrow="FAQ locale"
-        withJsonLd={false}
       />
 
       {relatedCities.length > 0 && (

@@ -4,7 +4,8 @@ import { FullManagement } from "@/components/sections/FullManagement";
 import { ServicesOverview } from "@/components/sections/ServicesOverview";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Conciergerie premium à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
@@ -71,6 +72,13 @@ export default function ConciergeriePage() {
       <FullManagement />
       <ServicesOverview />
       <CtaFinal />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Conciergerie", path: "/conciergerie" },
+        ])}
+      />
     </>
   );
 }

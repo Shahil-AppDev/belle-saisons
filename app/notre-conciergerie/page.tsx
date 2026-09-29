@@ -3,7 +3,8 @@ import { PageHero } from "@/components/sections/PageHero";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Notre conciergerie : la méthode Belle Saisons";
 const DESCRIPTION =
@@ -85,6 +86,13 @@ export default function NotreConciergeriePage() {
       </section>
 
       <CtaFinal />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Notre conciergerie", path: "/notre-conciergerie" },
+        ])}
+      />
     </>
   );
 }

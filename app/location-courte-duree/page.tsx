@@ -3,7 +3,8 @@ import { PageHero } from "@/components/sections/PageHero";
 import { TravelerExperience } from "@/components/sections/TravelerExperience";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Location courte durée à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
@@ -65,6 +66,13 @@ export default function LocationCourteDureePage() {
 
       <TravelerExperience />
       <CtaFinal />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Location courte durée", path: "/location-courte-duree" },
+        ])}
+      />
     </>
   );
 }

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Container } from "@/components/ui/Container";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { siteConfig, PRIMARY_CTA } from "@/lib/site";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Contact — Confiez votre bien à Belle Saisons";
 const DESCRIPTION =
@@ -62,6 +63,13 @@ export default function ContactPage() {
           <ContactForm />
         </Container>
       </section>
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
     </>
   );
 }

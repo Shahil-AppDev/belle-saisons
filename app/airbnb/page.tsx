@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { PlatformContent } from "@/components/sections/PlatformContent";
 import { CtaFinal } from "@/components/sections/CtaFinal";
-import { buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Conciergerie Airbnb à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
@@ -59,6 +60,13 @@ export default function AirbnbPage() {
       <CtaFinal
         title="Confiez la gestion de votre annonce Airbnb"
         description="Belle Saisons prend en charge l'intégralité de votre présence Airbnb, à Caen comme sur la Côte de Nacre."
+      />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Airbnb", path: "/airbnb" },
+        ])}
       />
     </>
   );
