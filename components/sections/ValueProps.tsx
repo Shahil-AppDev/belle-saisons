@@ -35,9 +35,9 @@ export function ValueProps() {
                 <span className="font-serif text-2xl text-champagne-ink">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-serif text-xl text-anthracite">
+                <h2 className="font-serif text-xl text-anthracite">
                   {item.title}
-                </h3>
+                </h2>
                 <p className="text-sm leading-relaxed text-brun">
                   {item.description}
                 </p>
