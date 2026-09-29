@@ -39,8 +39,12 @@ type ButtonAsButton = CommonProps & {
 
 export function Button(props: ButtonAsLink | ButtonAsButton) {
   const { children, variant = "primary", size = "md", className = "" } = props;
+  // whitespace-normal en dessous de sm : un libellé long (ex. "Démarrer
+  // l'étude de mon bien") ne doit jamais forcer un scroll horizontal sur
+  // les très petits écrans (320px). À partir de sm, le comportement
+  // d'origine (une seule ligne) est conservé.
   const base =
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm tracking-[0.08em] uppercase transition-colors duration-300 ease-out";
+    "inline-flex items-center justify-center gap-2 whitespace-normal text-center sm:whitespace-nowrap rounded-sm tracking-[0.08em] uppercase transition-colors duration-300 ease-out";
   const classes = `${base} ${SIZE_STYLES[size]} ${VARIANT_STYLES[variant]} ${className}`;
 
   if ("href" in props && props.href) {
