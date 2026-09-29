@@ -20,7 +20,9 @@ export type AnalyticsEvent =
   | "owner_form_submit"
   | "contact_form_submit"
   | "cta_confier_mon_bien"
-  | "cta_services";
+  | "cta_services"
+  | "local_page_cta_click"
+  | "blog_to_owner_cta";
 
 export type AnalyticsProperties = Record<string, string | number | boolean | undefined>;
 

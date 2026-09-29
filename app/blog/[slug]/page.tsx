@@ -109,6 +109,8 @@ export default async function BlogPostPage({
       <CtaFinal
         title="Prêt à passer à l'action ?"
         description="Belle Saisons vous accompagne dans la mise en location de votre bien, de A à Z."
+        trackingEvent="blog_to_owner_cta"
+        trackingProps={{ article: post.slug }}
       />
 
       <JsonLd

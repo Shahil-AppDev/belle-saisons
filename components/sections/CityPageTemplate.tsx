@@ -166,6 +166,8 @@ export function CityPageTemplate({
       <CtaFinal
         title={`Confiez votre bien à ${city.name}`}
         description="Échangeons sur votre logement : nous vous proposons une gestion adaptée à votre secteur."
+        trackingEvent="local_page_cta_click"
+        trackingProps={{ page: city.slug }}
       />
 
       <JsonLd
