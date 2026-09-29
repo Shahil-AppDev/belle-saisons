@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { Button } from "@/components/ui/Button";
-import { NAV_LINKS } from "@/lib/site";
+import { NAV_LINKS, PRIMARY_CTA } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -44,7 +45,7 @@ export function Header() {
         />
 
         <nav
-          className={`hidden lg:flex items-center gap-8 text-sm tracking-[0.04em] ${
+          className={`hidden xl:flex items-center gap-5 whitespace-nowrap text-sm tracking-[0.03em] ${
             transparent ? "text-blanc-casse" : "text-anthracite"
           }`}
         >
@@ -59,13 +60,15 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <Button
-            href="/contact"
+            href={PRIMARY_CTA.href}
+            size="sm"
             variant={transparent ? "ghost" : "primary"}
             className={transparent ? "text-blanc-casse border-blanc-casse/50 hover:border-blanc-casse" : ""}
+            onClick={() => trackEvent("cta_confier_mon_bien", { location: "header-desktop" })}
           >
-            Confier mon bien
+            {PRIMARY_CTA.label}
           </Button>
         </div>
 
@@ -74,7 +77,7 @@ export function Header() {
           aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
-          className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] lg:hidden ${
+          className={`flex h-10 w-10 flex-col items-center justify-center gap-[5px] xl:hidden ${
             transparent ? "text-blanc-casse" : "text-anthracite"
           }`}
         >
@@ -97,7 +100,12 @@ export function Header() {
       </div>
 
       <div
-        className={`lg:hidden overflow-hidden bg-ivoire transition-[max-height] duration-500 ease-out ${
+        // `inert` retire ce panneau de l'ordre de tabulation et des
+        // technologies d'assistance tant qu'il est visuellement replié
+        // (max-h-0) : sans cela, ses liens restaient atteignables au
+        // clavier même invisibles.
+        inert={!menuOpen}
+        className={`xl:hidden overflow-hidden bg-ivoire transition-[max-height] duration-500 ease-out ${
           menuOpen ? "max-h-[26rem]" : "max-h-0"
         }`}
       >
@@ -112,8 +120,12 @@ export function Header() {
             </Link>
           ))}
           <div className="pt-5">
-            <Button href="/contact" className="w-full">
-              Confier mon bien
+            <Button
+              href={PRIMARY_CTA.href}
+              className="w-full"
+              onClick={() => trackEvent("cta_confier_mon_bien", { location: "header-mobile" })}
+            >
+              {PRIMARY_CTA.label}
             </Button>
           </div>
         </nav>

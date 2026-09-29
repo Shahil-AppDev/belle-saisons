@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { HeroCtas } from "@/components/sections/HeroCtas";
 
 export function Hero() {
   return (
@@ -34,29 +34,18 @@ export function Hero() {
         <div className="flex flex-col gap-7 max-w-3xl animate-fade-up">
           <span className="flex items-center gap-3 text-xs uppercase tracking-[0.32em] text-or-doux">
             <span className="h-px w-8 bg-or-doux" />
-            Conciergerie haut de gamme — Caen &amp; Côte de Nacre
+            Conciergerie premium — location courte &amp; moyenne durée
           </span>
-          <h1 className="text-balance font-serif text-4xl leading-[1.1] sm:text-5xl lg:text-[3.4rem]">
-            Votre bien, entre de bonnes mains.
+          <h1 className="text-balance font-serif text-4xl leading-[1.12] sm:text-5xl lg:text-[3.2rem]">
+            Conciergerie haut de gamme à Caen et sur la Côte de Nacre
           </h1>
           <p className="max-w-xl text-balance text-base leading-relaxed text-blanc-casse/80 sm:text-lg">
-            Belle Saisons prend en charge l&apos;intégralité de la gestion de
-            votre logement en location courte et moyenne durée : de la
-            stratégie tarifaire à l&apos;accueil des voyageurs, à Caen, sur la
-            Côte de Nacre et plus largement en Normandie.
+            Belle Saisons accompagne les propriétaires dans l&apos;exploitation
+            quotidienne de leur location saisonnière : de la mise en valeur
+            du logement à l&apos;accueil des voyageurs, sur le littoral de
+            Caen et de la Côte de Nacre.
           </p>
-          <div className="flex flex-col gap-4 pt-2 sm:flex-row">
-            <Button href="/contact" variant="primary" className="bg-or-doux! border-or-doux! text-noir hover:bg-champagne! hover:border-champagne!">
-              Confier mon bien
-            </Button>
-            <Button
-              href="/services"
-              variant="ghost"
-              className="text-blanc-casse border-blanc-casse/40 hover:border-blanc-casse"
-            >
-              Découvrir nos services
-            </Button>
-          </div>
+          <HeroCtas />
         </div>
       </Container>
 

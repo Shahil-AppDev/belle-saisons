@@ -1,12 +1,13 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { PRIMARY_CTA } from "@/lib/site";
 
 export function CtaFinal({
   title = "Prêt à confier votre bien à Belle Saisons ?",
-  description = "Échangeons sur votre logement et vos objectifs : nous vous proposons la formule de gestion la plus adaptée.",
-  primaryLabel = "Confier mon bien",
-  primaryHref = "/contact",
+  description = "Échangeons sur votre logement et vos objectifs : nous étudions votre bien pour vous proposer l'accompagnement le plus adapté.",
+  primaryLabel = PRIMARY_CTA.label,
+  primaryHref = PRIMARY_CTA.href,
 }: {
   title?: string;
   description?: string;

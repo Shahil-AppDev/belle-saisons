@@ -13,7 +13,7 @@ export function buildMetadata({
   image?: string;
 }): Metadata {
   const url = `${siteConfig.url}${path}`;
-  const ogImage = image ?? "/brand/og-image-logo.png";
+  const ogImage = image ?? siteConfig.socialImagePath;
 
   return {
     title,
@@ -28,7 +28,7 @@ export function buildMetadata({
       siteName: siteConfig.name,
       type: "website",
       locale: siteConfig.locale,
-      images: [{ url: ogImage, width: 1200, height: 1200, alt: title }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
@@ -69,7 +69,7 @@ export function localBusinessJsonLd({
     name,
     description,
     url: `${siteConfig.url}${path}`,
-    image: `${siteConfig.url}/brand/logo.png`,
+    image: `${siteConfig.url}${siteConfig.logoPath}`,
     areaServed: areaServed.map((area) => ({
       "@type": "Place",
       name: area,
@@ -104,6 +104,51 @@ export function serviceJsonLd({
       url: siteConfig.url,
     },
     areaServed: siteConfig.areaServed,
+  };
+}
+
+export function blogPostingJsonLd({
+  title,
+  description,
+  path,
+  datePublished,
+  authorName,
+  image,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  authorName: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    url: `${siteConfig.url}${path}`,
+    datePublished,
+    dateModified: datePublished,
+    inLanguage: "fr-FR",
+    author: {
+      "@type": "Organization",
+      name: authorName,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}${siteConfig.logoPath}`,
+      },
+    },
+    image: image ?? `${siteConfig.url}${siteConfig.socialImagePath}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}${path}`,
+    },
   };
 }
 

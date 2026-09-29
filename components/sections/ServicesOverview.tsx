@@ -33,7 +33,7 @@ export function ServicesOverview() {
                 <p className="text-sm leading-relaxed text-brun">
                   {service.shortDescription}
                 </p>
-                <span className="mt-2 text-xs uppercase tracking-[0.2em] text-champagne transition-transform group-hover:translate-x-1">
+                <span className="mt-2 text-xs uppercase tracking-[0.2em] text-champagne-ink transition-transform group-hover:translate-x-1">
                   En savoir plus →
                 </span>
               </Link>

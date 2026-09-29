@@ -4,12 +4,14 @@ import { CtaFinal } from "@/components/sections/CtaFinal";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { FaqSection } from "@/components/sections/FaqSection";
 import { SERVICES } from "@/data/services";
+import { SERVICES_FAQ } from "@/data/faq";
 import { buildMetadata, serviceJsonLd } from "@/lib/seo";
 
 const TITLE = "Nos services de conciergerie à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
-  "Découvrez l'ensemble des services de gestion locative proposés par Belle Saisons : annonces, tarification, calendrier, accueil voyageurs, ménage, maintenance et suivi propriétaire.";
+  "Découvrez l'ensemble des services de conciergerie proposés par Belle Saisons : annonces, tarification, calendrier, accueil voyageurs, ménage, maintenance et suivi propriétaire.";
 
 export const metadata: Metadata = buildMetadata({
   title: TITLE,
@@ -77,10 +79,17 @@ export default function ServicesPage() {
         </Container>
       </section>
 
+      <FaqSection
+        items={SERVICES_FAQ}
+        eyebrow="FAQ services"
+        title="Questions fréquentes sur nos services"
+      />
+
       <CtaFinal
         title="Une question sur nos services ?"
         description="Parlons de votre bien et des services les plus adaptés à sa localisation et à votre situation."
         primaryLabel="Échanger avec notre équipe"
+        primaryHref="/contact"
       />
     </>
   );

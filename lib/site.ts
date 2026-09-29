@@ -1,13 +1,27 @@
+// Domaine définitif du site. Piloté par NEXT_PUBLIC_SITE_URL pour permettre
+// des environnements de preview/staging sans jamais générer d'URL
+// localhost en production ; retombe sur le domaine définitif si la
+// variable n'est pas définie. Toujours sans slash final.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.belle-saisons.fr").replace(
+  /\/+$/,
+  ""
+);
+
 export const siteConfig = {
   name: "Conciergerie Belle Saisons",
   shortName: "Belle Saisons",
   baseline: "Votre temps, notre expertise",
   description:
     "Conciergerie haut de gamme à Caen et sur la Côte de Nacre. Belle Saisons gère l'intégralité de votre bien en location courte et moyenne durée : annonces, tarification, accueil voyageurs, ménage et maintenance.",
-  url: "https://www.belle-saisons.fr",
+  url: SITE_URL,
+  logoPath: "/brand/logo.png",
+  socialImagePath: "/brand/og-image.png",
   locale: "fr_FR",
-  phone: "",
-  email: "contact@belle-saisons.fr",
+  // Aucun email ni téléphone public : l'adresse contact@belle-saisons.fr
+  // circule en interne mais n'a pas été confirmée comme boîte active, et
+  // aucun numéro n'a été communiqué. Tant que ces coordonnées ne sont pas
+  // validées, le site s'appuie uniquement sur le formulaire de contact
+  // (traité côté serveur, cf. lib/mail.ts) plutôt que de les afficher.
   region: "Calvados, Normandie",
   areaServed: [
     "Caen",
@@ -28,10 +42,15 @@ export const siteConfig = {
   },
 } as const;
 
+export const PRIMARY_CTA = {
+  label: "Confier mon bien",
+  href: "/confier-mon-bien",
+} as const;
+
 export const NAV_LINKS = [
   { label: "Conciergerie", href: "/conciergerie" },
   { label: "Services", href: "/services" },
-  { label: "Gestion locative", href: "/gestion-locative" },
+  { label: "Gestion complète", href: "/gestion-complete" },
   { label: "Propriétaires", href: "/proprietaires" },
   { label: "Notre conciergerie", href: "/notre-conciergerie" },
   { label: "Blog", href: "/blog" },
@@ -39,7 +58,8 @@ export const NAV_LINKS = [
 ] as const;
 
 export const FOOTER_SERVICE_LINKS = [
-  { label: "Gestion locative complète", href: "/gestion-locative" },
+  { label: "Confier mon bien", href: "/confier-mon-bien" },
+  { label: "Gestion complète de conciergerie", href: "/gestion-complete" },
   { label: "Location courte durée", href: "/location-courte-duree" },
   { label: "Conciergerie Airbnb", href: "/airbnb" },
   { label: "Conciergerie Booking.com", href: "/booking" },

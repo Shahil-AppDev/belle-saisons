@@ -17,7 +17,7 @@ export function PageHero({
       <Container className="flex flex-col gap-6">
         <Breadcrumbs items={breadcrumbs} />
         <div className="flex flex-col gap-4 max-w-3xl">
-          <span className="text-xs uppercase tracking-[0.3em] text-champagne">
+          <span className="text-xs uppercase tracking-[0.3em] text-champagne-ink">
             {eyebrow}
           </span>
           <h1 className="text-balance font-serif text-4xl leading-[1.15] text-anthracite sm:text-5xl">
