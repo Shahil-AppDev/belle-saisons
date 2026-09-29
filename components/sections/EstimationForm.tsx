@@ -66,7 +66,21 @@ export function EstimationForm() {
 
   function goNext() {
     const currentRef = stepRefs[step - 1];
-    if (currentRef?.current && !currentRef.current.reportValidity()) return;
+    // Un <fieldset> est toujours "barred from constraint validation" :
+    // fieldset.reportValidity() renvoie systématiquement true, quel que
+    // soit l'état de ses champs. Il faut donc valider individuellement
+    // chaque contrôle requis qu'il contient.
+    const requiredControls = currentRef?.current?.querySelectorAll<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >("[required]");
+    if (requiredControls) {
+      for (const control of requiredControls) {
+        if (!control.checkValidity()) {
+          control.reportValidity();
+          return;
+        }
+      }
+    }
 
     if (step === 3) {
       const checked = currentRef?.current?.querySelectorAll<HTMLInputElement>(
@@ -122,14 +136,14 @@ export function EstimationForm() {
                     ? "bg-champagne text-blanc-casse"
                     : isActive
                       ? "border border-champagne text-champagne-ink"
-                      : "border border-anthracite/20 text-brun/60"
+                      : "border border-anthracite/20 text-brun"
                 }`}
               >
                 {stepNumber}
               </span>
               <span
                 className={`hidden text-xs uppercase tracking-[0.12em] sm:block ${
-                  isActive ? "text-anthracite" : "text-brun/50"
+                  isActive ? "text-anthracite" : "text-brun"
                 }`}
               >
                 {s.label}

@@ -16,8 +16,12 @@ export const contactSchema = z.object({
   consent: z.literal("on", {
     message: "Le consentement au traitement des données est requis.",
   }),
-  // Anti-spam : ce champ doit rester vide (honeypot).
-  company: z.string().max(0).optional().or(z.literal("")),
+  // Anti-spam (honeypot) : un humain laisse ce champ vide. Le schéma doit
+  // accepter n'importe quelle valeur pour que la demande reste "valide" et
+  // que lib/actions/contact.ts puisse répondre un faux succès silencieux —
+  // un `.max(0)` ferait échouer le parsing Zod avant d'atteindre cette
+  // vérification et renverrait une vraie erreur, révélant la détection.
+  company: z.string().max(200).optional().or(z.literal("")),
 
   // Attribution de lead (voir lib/attribution.ts) : jamais requis, jamais
   // affiché, transmis uniquement à l'email interne.
