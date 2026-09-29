@@ -1,11 +1,34 @@
+// Domaine par défaut si NEXT_PUBLIC_SITE_URL est absente. À remplacer par
+// le domaine réel avant le lancement (voir README > Déploiement production).
+const FALLBACK_SITE_URL = "https://www.belle-saisons.fr";
+
+function resolveSiteUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!raw) return FALLBACK_SITE_URL;
+
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?\/?$/i.test(raw);
+
+  // En développement, une URL localhost est acceptée telle quelle (utile
+  // pour tester les emails/JSON-LD en local). En production, une URL
+  // localhost ne doit jamais fuiter dans le sitemap, les metadata ou les
+  // emails : on retombe alors sur le domaine définitif documenté ci-dessus.
+  if (isLocalhost && process.env.NODE_ENV === "production") {
+    console.warn(
+      "[site] NEXT_PUBLIC_SITE_URL pointe vers localhost en production — retombée sur",
+      FALLBACK_SITE_URL,
+      ". Renseignez le domaine définitif avant le lancement."
+    );
+    return FALLBACK_SITE_URL;
+  }
+
+  return raw;
+}
+
 // Domaine définitif du site. Piloté par NEXT_PUBLIC_SITE_URL pour permettre
 // des environnements de preview/staging sans jamais générer d'URL
 // localhost en production ; retombe sur le domaine définitif si la
 // variable n'est pas définie. Toujours sans slash final.
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.belle-saisons.fr").replace(
-  /\/+$/,
-  ""
-);
+const SITE_URL = resolveSiteUrl().replace(/\/+$/, "");
 
 export const siteConfig = {
   name: "Conciergerie Belle Saisons",
