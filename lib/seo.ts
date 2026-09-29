@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "./site";
+import { BUSINESS } from "@/data/business";
 
 export function buildMetadata({
   title,
@@ -63,6 +64,24 @@ export function localBusinessJsonLd({
   path: string;
   areaServed: string[];
 }) {
+  // L'adresse et le téléphone ne sont ajoutés que si BUSINESS (data/business.ts)
+  // les a réellement renseignés : jamais de fausse adresse, de faux
+  // téléphone, de fausse note ou de faux avis dans ce schema.
+  const address = BUSINESS.address
+    ? {
+        "@type": "PostalAddress",
+        streetAddress: BUSINESS.address.streetAddress,
+        postalCode: BUSINESS.address.postalCode,
+        addressLocality: BUSINESS.address.addressLocality,
+        addressRegion: "Calvados",
+        addressCountry: "FR",
+      }
+    : {
+        "@type": "PostalAddress",
+        addressRegion: "Calvados",
+        addressCountry: "FR",
+      };
+
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -74,11 +93,8 @@ export function localBusinessJsonLd({
       "@type": "Place",
       name: area,
     })),
-    address: {
-      "@type": "PostalAddress",
-      addressRegion: "Calvados",
-      addressCountry: "FR",
-    },
+    address,
+    ...(BUSINESS.phone ? { telephone: BUSINESS.phone } : {}),
   };
 }
 
