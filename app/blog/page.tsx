@@ -3,8 +3,9 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { BLOG_POSTS, getCategoryLabel } from "@/data/blog";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const TITLE = "Blog — Conseils propriétaires à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
@@ -47,7 +48,7 @@ export default function BlogPage() {
                   <p className="text-sm leading-relaxed text-brun">
                     {post.excerpt}
                   </p>
-                  <div className="mt-auto flex items-center justify-between pt-4 text-xs text-brun/70">
+                  <div className="mt-auto flex items-center justify-between pt-4 text-xs text-brun">
                     <span>{post.readTime} de lecture</span>
                     <span className="text-champagne-ink transition-transform group-hover:translate-x-1">
                       Lire l&apos;article →
@@ -59,6 +60,13 @@ export default function BlogPage() {
           </div>
         </Container>
       </section>
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Blog", path: "/blog" },
+        ])}
+      />
     </>
   );
 }

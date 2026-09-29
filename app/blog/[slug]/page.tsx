@@ -51,7 +51,7 @@ export default async function BlogPostPage({
 
       <article className="bg-ivoire py-16 lg:py-20">
         <Container className="max-w-3xl">
-          <div className="mb-10 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em] text-brun/70">
+          <div className="mb-10 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em] text-brun">
             <span>{post.author}</span>
             <span aria-hidden="true">·</span>
             <span>

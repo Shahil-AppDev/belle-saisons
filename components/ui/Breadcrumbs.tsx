@@ -9,7 +9,7 @@ export function Breadcrumbs({
   items: Crumb[];
   tone?: "dark" | "light";
 }) {
-  const mutedClass = tone === "light" ? "text-blanc-casse/60" : "text-brun/70";
+  const mutedClass = tone === "light" ? "text-blanc-casse/60" : "text-brun";
   const currentClass = tone === "light" ? "text-blanc-casse" : "text-anthracite";
   const hoverClass =
     tone === "light" ? "hover:text-blanc-casse" : "hover:text-anthracite";

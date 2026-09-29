@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { SERVICES } from "@/data/services";
 import { SERVICES_FAQ } from "@/data/faq";
-import { buildMetadata, serviceJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, serviceJsonLd } from "@/lib/seo";
 
 const TITLE = "Nos services de conciergerie à Caen et sur la Côte de Nacre";
 const DESCRIPTION =
@@ -42,7 +42,7 @@ export default function ServicesPage() {
                   className="grid grid-cols-1 gap-6 border-t border-anthracite/10 pt-10 lg:grid-cols-[0.35fr_0.65fr]"
                 >
                   <div>
-                    <span className="font-serif text-3xl text-or-doux">
+                    <span className="font-serif text-3xl text-champagne-ink">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <h2 className="mt-2 font-serif text-2xl text-anthracite">
@@ -90,6 +90,13 @@ export default function ServicesPage() {
         description="Parlons de votre bien et des services les plus adaptés à sa localisation et à votre situation."
         primaryLabel="Échanger avec notre équipe"
         primaryHref="/contact"
+      />
+
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Accueil", path: "/" },
+          { name: "Services", path: "/services" },
+        ])}
       />
     </>
   );

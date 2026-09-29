@@ -54,7 +54,7 @@ export function BrandLogo({
           className={`flex flex-col leading-tight font-serif ${text} ${wordmarkClassName}`}
         >
           <span className="tracking-[0.14em] uppercase">Belle Saisons</span>
-          <span className="text-[0.62em] tracking-[0.32em] uppercase text-current/60 font-sans">
+          <span className="text-[0.62em] tracking-[0.32em] uppercase text-current/70 font-sans">
             Conciergerie
           </span>
         </span>

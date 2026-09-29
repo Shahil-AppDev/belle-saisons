@@ -43,7 +43,7 @@ export function HowItWorks() {
           {STEPS.map((item, index) => (
             <Reveal key={item.step} delay={index * 90}>
               <div className="flex flex-col items-center gap-3 text-center">
-                <span className="font-serif text-3xl text-or-doux">
+                <span className="font-serif text-3xl text-champagne-ink">
                   {item.step}
                 </span>
                 <h3 className="font-serif text-lg text-anthracite">
