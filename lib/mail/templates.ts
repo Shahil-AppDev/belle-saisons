@@ -24,6 +24,77 @@ function row(label: string, value: string): string {
   return `<p style="margin:0 0 10px;"><strong style="color:#7d5e28;">${escapeHtml(label)} :</strong> ${escapeHtml(value)}</p>`;
 }
 
+type AttributionFields = {
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  landing_page?: string;
+  referrer?: string;
+};
+
+// Le "lead_source" n'est jamais saisi par le visiteur : c'est une lecture
+// des paramètres déjà capturés (utm_source en priorité, sinon le domaine
+// du referrer, sinon "Direct"), utile pour prioriser le suivi commercial
+// sans construire de CRM.
+function resolveLeadSource(data: AttributionFields): string {
+  if (data.utm_source) return data.utm_source;
+  if (data.referrer) {
+    try {
+      return new URL(data.referrer).hostname;
+    } catch {
+      return data.referrer;
+    }
+  }
+  return "Direct (accès direct, favori ou app)";
+}
+
+function attributionRowsHtml(data: AttributionFields): string {
+  const hasAttribution = Boolean(
+    data.utm_source ||
+      data.utm_medium ||
+      data.utm_campaign ||
+      data.utm_term ||
+      data.utm_content ||
+      data.landing_page ||
+      data.referrer
+  );
+  if (!hasAttribution) return "";
+
+  return [
+    row("Source du lead", resolveLeadSource(data)),
+    ...(data.landing_page ? [row("Page d'atterrissage", data.landing_page)] : []),
+    ...(data.utm_medium ? [row("UTM medium", data.utm_medium)] : []),
+    ...(data.utm_campaign ? [row("UTM campagne", data.utm_campaign)] : []),
+    ...(data.utm_term ? [row("UTM terme", data.utm_term)] : []),
+    ...(data.utm_content ? [row("UTM contenu", data.utm_content)] : []),
+  ].join("");
+}
+
+function attributionLinesText(data: AttributionFields): string[] {
+  const hasAttribution = Boolean(
+    data.utm_source ||
+      data.utm_medium ||
+      data.utm_campaign ||
+      data.utm_term ||
+      data.utm_content ||
+      data.landing_page ||
+      data.referrer
+  );
+  if (!hasAttribution) return [];
+
+  return [
+    "",
+    `Source du lead : ${resolveLeadSource(data)}`,
+    data.landing_page ? `Page d'atterrissage : ${data.landing_page}` : undefined,
+    data.utm_medium ? `UTM medium : ${data.utm_medium}` : undefined,
+    data.utm_campaign ? `UTM campagne : ${data.utm_campaign}` : undefined,
+    data.utm_term ? `UTM terme : ${data.utm_term}` : undefined,
+    data.utm_content ? `UTM contenu : ${data.utm_content}` : undefined,
+  ].filter((line): line is string => Boolean(line));
+}
+
 // ---------------------------------------------------------------------------
 // Email interne — nouvelle demande d'estimation propriétaire
 // ---------------------------------------------------------------------------
@@ -60,6 +131,7 @@ export function buildOwnerLeadEmail(data: EstimationInput): MailContent {
       <p style="margin:0 0 16px;font-size:16px;">Nouvelle demande d'estimation propriétaire.</p>
       ${rows}
       ${messageHtml}
+      ${attributionRowsHtml(data)}
     `,
   });
 
@@ -79,6 +151,7 @@ export function buildOwnerLeadEmail(data: EstimationInput): MailContent {
     data.message ? `Message : ${data.message}` : undefined,
     "",
     `Reçue le ${requestDate}`,
+    ...attributionLinesText(data),
   ]
     .filter(Boolean)
     .join("\n");
@@ -156,6 +229,7 @@ export function buildContactLeadEmail(data: ContactInput): MailContent {
       <p style="margin:0 0 16px;font-size:16px;">Nouveau message via le formulaire de contact.</p>
       ${rows}
       <p style="margin:16px 0 0;"><strong style="color:#7d5e28;">Message :</strong><br />${escapeHtml(data.message).replace(/\n/g, "<br />")}</p>
+      ${attributionRowsHtml(data)}
     `,
   });
 
@@ -170,6 +244,7 @@ export function buildContactLeadEmail(data: ContactInput): MailContent {
     data.message,
     "",
     `Reçu le ${requestDate}`,
+    ...attributionLinesText(data),
   ]
     .filter(Boolean)
     .join("\n");

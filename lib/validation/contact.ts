@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CONTACT_SUBJECTS } from "@/lib/validation/contact-options";
+import { attributionSchema } from "@/lib/validation/attribution";
 
 const subjectValues = CONTACT_SUBJECTS.map((option) => option.value) as [
   string,
@@ -17,6 +18,10 @@ export const contactSchema = z.object({
   }),
   // Anti-spam : ce champ doit rester vide (honeypot).
   company: z.string().max(0).optional().or(z.literal("")),
+
+  // Attribution de lead (voir lib/attribution.ts) : jamais requis, jamais
+  // affiché, transmis uniquement à l'email interne.
+  ...attributionSchema,
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

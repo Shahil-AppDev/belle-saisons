@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { PROPERTY_TYPES, NEEDS_OPTIONS } from "@/lib/validation/estimation-options";
+import { attributionSchema } from "@/lib/validation/attribution";
 
 const propertyTypeValues = PROPERTY_TYPES.map((option) => option.value) as [
   string,
@@ -70,6 +71,10 @@ export const estimationSchema = z.object({
 
   // Anti-spam : ce champ doit rester vide (honeypot).
   company: z.string().max(0).optional().or(z.literal("")),
+
+  // Attribution de lead (voir lib/attribution.ts) : jamais requis, jamais
+  // affiché, transmis uniquement à l'email interne.
+  ...attributionSchema,
 });
 
 export type EstimationInput = z.infer<typeof estimationSchema>;

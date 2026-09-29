@@ -19,6 +19,13 @@ export async function submitContact(
     message: formData.get("message"),
     consent: formData.get("consent"),
     company: formData.get("company") ?? "",
+    utm_source: formData.get("utm_source") ?? "",
+    utm_medium: formData.get("utm_medium") ?? "",
+    utm_campaign: formData.get("utm_campaign") ?? "",
+    utm_term: formData.get("utm_term") ?? "",
+    utm_content: formData.get("utm_content") ?? "",
+    landing_page: formData.get("landing_page") ?? "",
+    referrer: formData.get("referrer") ?? "",
   });
 
   if (!parsed.success) {

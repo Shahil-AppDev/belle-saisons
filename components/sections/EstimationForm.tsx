@@ -6,6 +6,7 @@ import { INITIAL_FORM_STATE } from "@/lib/actions/types";
 import { PROPERTY_TYPES, NEEDS_OPTIONS } from "@/lib/validation/estimation-options";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { FormConfirmation } from "@/components/sections/FormConfirmation";
+import { AttributionFields } from "@/components/sections/AttributionFields";
 import { trackEvent } from "@/lib/analytics";
 
 const STEPS = [
@@ -287,6 +288,8 @@ export function EstimationForm() {
         <label htmlFor="company">Ne pas remplir ce champ</label>
         <input type="text" id="company" name="company" tabIndex={-1} autoComplete="off" />
       </div>
+
+      <AttributionFields />
 
       {state.status === "error" && state.message && (
         <p role="alert" className="text-sm text-red-700">

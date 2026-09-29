@@ -6,6 +6,7 @@ import { INITIAL_FORM_STATE } from "@/lib/actions/types";
 import { CONTACT_SUBJECTS } from "@/lib/validation/contact-options";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { FormConfirmation } from "@/components/sections/FormConfirmation";
+import { AttributionFields } from "@/components/sections/AttributionFields";
 import { trackEvent } from "@/lib/analytics";
 
 export function ContactForm() {
@@ -122,6 +123,8 @@ export function ContactForm() {
         <label htmlFor="company">Ne pas remplir ce champ</label>
         <input type="text" id="company" name="company" tabIndex={-1} autoComplete="off" />
       </div>
+
+      <AttributionFields />
 
       {state.status === "error" && state.message && (
         <p role="alert" className="text-sm text-red-700">

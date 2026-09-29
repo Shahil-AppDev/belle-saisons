@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyCta } from "@/components/layout/MobileStickyCta";
 import { PlausibleScript } from "@/components/analytics/PlausibleScript";
+import { AttributionCapture } from "@/components/analytics/AttributionCapture";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <PlausibleScript />
+        <AttributionCapture />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
